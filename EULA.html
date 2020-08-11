@@ -1,0 +1,986 @@
+<html><head>
+
+<link href="https://fonts.googleapis.com/css?family=Arvo|Nunito|Oxygen|Exo+2|Source+Code+Pro" rel="stylesheet">
+
+<link href="https://cdn.flycricket.com/templates/main-ltr/css/bootstrap.min.css" rel="stylesheet">
+
+
+<style>/* these are overridden inline in the mustache compilation */
+:root {
+  --background-color: #ffffff;
+  --poweredbybg-color: #f0f0f0;
+  --text-color: #000000;
+  --link-color: #008DD5;
+  --linkhover-color: #005A88;
+  --main-font: 'Arvo'; }
+
+.editing-active {
+  transition: all 0.2s ease-in-out;
+  border: 3px dotted rgba(0, 0, 0, 0.2); }
+  .editing-active:hover {
+    border-color: rgba(31, 175, 132, 0.8);
+    background-color: rgba(31, 175, 132, 0.3);
+    cursor: pointer; }
+
+.placeholder-text {
+  font-style: italic;
+  opacity: 0.6; }
+
+* {
+  font-family: var(--main-font);
+  font-weight: 400;
+  color: var(--text-color); }
+
+body {
+  padding: 0;
+  margin: 0;
+  -webkit-text-size-adjust: 100%;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  -webkit-font-feature-settings: "pnum";
+  font-feature-settings: "pnum";
+  font-variant-numeric: proportional-nums;
+  position: relative;
+  background: #fff; }
+
+a {
+  color: var(--link-color);
+  transition: all 0.2s linear; }
+  a:focus, a:hover {
+    color: var(--linkhover-color); }
+  a.nohover:hover {
+    text-decoration: none; }
+
+.claim-bar {
+  padding: 12px 0;
+  background: #fff;
+  color: #555;
+  font-family: 'Oxygen', Helvetica, sans-serif;
+  transition: all 0.3s ease-in-out; }
+  .claim-bar * {
+    font-family: 'Oxygen', Helvetica, sans-serif; }
+  .claim-bar div {
+    text-decoration: none;
+    transition: all 0.3s ease-in-out;
+    font-size: 0.9em;
+    cursor: pointer;
+    color: #555; }
+    .claim-bar div span {
+      transition: all 0.3s ease-in-out;
+      color: #008DD5; }
+  .claim-bar:hover {
+    text-decoration: none;
+    text-decoration: none;
+    background: #008DD5;
+    color: white; }
+    .claim-bar:hover div {
+      color: white; }
+      .claim-bar:hover div span {
+        color: white; }
+
+.whitelabel-badge-mobile {
+  background: white;
+  padding-left: 0.75em;
+  padding-right: 0.75em;
+  padding-top: 0.25em;
+  padding-bottom: 0.25em;
+  border-radius: 4px;
+  text-align: center;
+  -webkit-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+  transition: 0.2s all ease-in-out; }
+  .whitelabel-badge-mobile .wl-label {
+    font-size: 0.8em;
+    color: #777; }
+  .whitelabel-badge-mobile * {
+    transition: 0.2s all ease-in-out; }
+  .whitelabel-badge-mobile .st0 {
+    fill: #1FAF84; }
+  .whitelabel-badge-mobile:hover {
+    background: #1FAF84; }
+    .whitelabel-badge-mobile:hover * {
+      color: white; }
+    .whitelabel-badge-mobile:hover .st0 {
+      fill: #ffffff; }
+  @media (min-width: 491px) {
+    .whitelabel-badge-mobile {
+      display: none; } }
+
+.promo-badge {
+  display: block;
+  position: relative;
+  background: white;
+  padding-left: 0.5em;
+  padding-right: 0.5em;
+  padding-top: 0.5em;
+  padding-bottom: 0.5em;
+  text-align: left;
+  transition: 0.2s all ease-in-out;
+  cursor: pointer; }
+  .promo-badge * {
+    font-family: 'Oxygen', Helvetica, sans-serif;
+    transition: 0.2s all ease-in-out;
+    line-height: normal;
+    text-align: left; }
+  .promo-badge .pb-loading-container {
+    padding: 0.5em; }
+    .promo-badge .pb-loading-container .lds-ring {
+      display: inline-block;
+      position: relative;
+      width: 40px;
+      height: 40px; }
+    .promo-badge .pb-loading-container .lds-ring div {
+      box-sizing: border-box;
+      display: block;
+      position: absolute;
+      width: 32px;
+      height: 32px;
+      margin: 4px;
+      border: 4px solid #ddd;
+      border-radius: 50%;
+      animation: lds-ring 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+      border-color: #ddd transparent transparent transparent; }
+    .promo-badge .pb-loading-container .lds-ring div:nth-child(1) {
+      animation-delay: -0.45s; }
+    .promo-badge .pb-loading-container .lds-ring div:nth-child(2) {
+      animation-delay: -0.3s; }
+    .promo-badge .pb-loading-container .lds-ring div:nth-child(3) {
+      animation-delay: -0.15s; }
+
+@keyframes lds-ring {
+  0% {
+    transform: rotate(0deg); }
+  100% {
+    transform: rotate(360deg); } }
+  .promo-badge .pb-main-container {
+    display: none;
+    flex-direction: row; }
+    .promo-badge .pb-main-container .pb-text-container {
+      flex: 1;
+      padding-right: 0.5em;
+      align-self: center; }
+      .promo-badge .pb-main-container .pb-text-container .pb-h1 span {
+        color: #555;
+        font-size: 1.2em;
+        margin-right: 0.2em; }
+      .promo-badge .pb-main-container .pb-text-container .pb-h1 .pb-ios {
+        width: 16px;
+        height: 16px;
+        fill: #ccc;
+        margin-bottom: -1px;
+        display: none; }
+      .promo-badge .pb-main-container .pb-text-container .pb-h1 .pb-android {
+        width: 15px;
+        height: 15px;
+        fill: #ccc;
+        stroke: #ccc;
+        margin-bottom: -1px;
+        display: none; }
+      .promo-badge .pb-main-container .pb-text-container .pb-h2 {
+        color: #888;
+        font-size: 0.9em;
+        margin-top: -2px; }
+      .promo-badge .pb-main-container .pb-text-container .pb-by {
+        font-size: 0.7em;
+        text-transform: uppercase;
+        text-align: left;
+        margin-top: 4px; }
+        .promo-badge .pb-main-container .pb-text-container .pb-by a {
+          color: #aaa; }
+          .promo-badge .pb-main-container .pb-text-container .pb-by a:hover {
+            color: #25d5a1;
+            text-decoration: none; }
+    .promo-badge .pb-main-container img {
+      width: 58px;
+      height: 58px;
+      border-radius: 8px;
+      margin-right: 0.75em;
+      align-self: center;
+      border: none;
+      display: none; }
+  @media (min-width: 600px) {
+    .promo-badge {
+      position: fixed;
+      z-index: 999999999;
+      top: 10px;
+      right: 10px;
+      border-radius: 8px;
+      -webkit-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24); } }
+
+footer {
+  background: #222; }
+  footer .editing-active {
+    border-color: rgba(255, 255, 255, 0.8); }
+  footer p {
+    color: #777 !important; }
+  footer .social-icons {
+    background: #222;
+    width: auto;
+    display: inline-block; }
+    footer .social-icons .social-icon {
+      transition: opacity 0.2s ease-in-out;
+      display: inline-block;
+      width: 32px;
+      margin-right: 12px;
+      opacity: 0.5;
+      padding-top: 30px; }
+      footer .social-icons .social-icon path, footer .social-icons .social-icon polygon {
+        transition: all 0.2s linear;
+        fill: white; }
+      footer .social-icons .social-icon:hover {
+        opacity: 1; }
+      footer .social-icons .social-icon.si-muted {
+        border: 2px dashed rgba(255, 255, 255, 0.3);
+        border-radius: 50%; }
+        footer .social-icons .social-icon.si-muted path, footer .social-icons .social-icon.si-muted polygon {
+          transition: all 0.2s linear;
+          fill: rgba(255, 255, 255, 0.3); }
+    footer .social-icons.editing-active {
+      margin-top: 30px;
+      padding: 10px;
+      margin-left: -10px; }
+      footer .social-icons.editing-active .social-icon {
+        padding-top: 0; }
+  footer .footer-store-button-container {
+    text-align: right;
+    margin: auto;
+    vertical-align: middle; }
+    @media (max-width: 767px) {
+      footer .footer-store-button-container {
+        text-align: center; } }
+    footer .footer-store-button-container .footer-store-button {
+      padding-top: 2em;
+      padding-bottom: 2em;
+      display: inline-block; }
+      footer .footer-store-button-container .footer-store-button .store-button {
+        height: auto !important;
+        margin: 0 6px; }
+        footer .footer-store-button-container .footer-store-button .store-button img {
+          height: 50px !important; }
+
+#header .store-button img {
+  height: 60px !important; }
+
+#attribution {
+  transition: all 0.2s ease-in-out;
+  padding: 2em 0;
+  font-size: 0.8em;
+  color: #888 !important; }
+  #attribution p {
+    margin-bottom: 0.45em;
+    font-size: 1.1em; }
+  #attribution a {
+    color: #aaa !important;
+    text-decoration: none; }
+    #attribution a:hover {
+      color: #007bff !important; }
+
+h1 {
+  font-size: 3.2em;
+  margin-bottom: 0;
+  font-weight: bold;
+  letter-spacing: 0.05em; }
+
+h2 {
+  margin-top: 0.2em;
+  margin-bottom: 0.3em;
+  font-size: 1.8em; }
+
+h3 {
+  font-weight: normal;
+  font-size: 16px; }
+
+html {
+  height: 100%; }
+
+body {
+  height: 100%;
+  color: var(--text-color);
+  text-align: center; }
+
+.cover-container {
+  margin-right: auto;
+  margin-left: auto; }
+
+.cover {
+  padding: 0 1.5rem; }
+  .cover .btn-lg {
+    padding: .75rem 1.25rem;
+    font-weight: 700; }
+
+p[id='text.line2'] {
+  margin-bottom: 0 !important; }
+
+.site-wrapper {
+  position: relative;
+  background-size: cover;
+  min-height: 100vh; }
+  .site-wrapper .editing-active {
+    border-color: var(--text-color); }
+  .site-wrapper .site-wrapper-background {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    opacity: 0.9;
+    background-color: var(--background-color); }
+  .site-wrapper .site-wrapper-inner {
+    padding-top: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    min-height: 100vh; }
+    @media (min-width: 767px) {
+      .site-wrapper .site-wrapper-inner {
+        padding-top: 0; } }
+    .site-wrapper .site-wrapper-inner .arrows {
+      width: 60px;
+      height: 32px;
+      position: absolute;
+      left: 50%;
+      margin-left: -30px;
+      bottom: 15px;
+      opacity: 0.5; }
+      @media (max-width: 786px) {
+        .site-wrapper .site-wrapper-inner .arrows {
+          display: none; } }
+      .site-wrapper .site-wrapper-inner .arrows path {
+        stroke: var(--text-color);
+        fill: transparent;
+        stroke-width: 2px; }
+
+@media (min-width: 40em) {
+  .cover-container {
+    width: 100%; } }
+
+@media (max-width: 786px) {
+  * {
+    text-align: center; } }
+
+#header {
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
+  margin: auto;
+  align-items: center;
+  justify-content: center; }
+  #header .text-container {
+    text-align: left;
+    position: relative;
+    display: block;
+    padding-left: 2em;
+    padding-right: 2em;
+    flex: 1;
+    max-width: 800px; }
+    #header .text-container .tc-table {
+      width: 100%;
+      display: table;
+      height: auto;
+      padding-bottom: 5em;
+      padding-top: 2em; }
+      @media (min-width: 787px) {
+        #header .text-container .tc-table {
+          height: 100%;
+          padding-bottom: 0; } }
+      #header .text-container .tc-table .editing-ttp {
+        padding: 1em;
+        font-size: 1.2em; }
+      #header .text-container .tc-table .editing-app-button {
+        font-style: italic;
+        padding: 0.25em;
+        font-size: 1.2em;
+        display: inline-block;
+        border-radius: 1em; }
+        #header .text-container .tc-table .editing-app-button:first-of-type {
+          margin-right: 0.5em; }
+    #header .text-container h1 {
+      font-size: 2em;
+      margin-bottom: 0.25em;
+      font-weight: bold;
+      letter-spacing: 0.05em;
+      line-height: 1.1em; }
+      @media (min-width: 787px) {
+        #header .text-container h1 {
+          font-size: 3.2em; } }
+    #header .text-container h2 {
+      margin-top: 0.2em;
+      margin-bottom: 0.3em;
+      font-size: 1.3em; }
+      @media (min-width: 787px) {
+        #header .text-container h2 {
+          font-size: 1.8em; } }
+  #header .device-container {
+    padding-bottom: 2em;
+    width: 100%; }
+    #header .device-container img {
+      max-height: 70vh;
+      max-width: 90%;
+      position: relative;
+      margin-top: 5em; }
+    @media (min-width: 787px) {
+      #header .device-container {
+        width: auto;
+        max-width: 40vw;
+        padding-bottom: 0; }
+        #header .device-container img {
+          margin-top: 0; } }
+
+.store-button {
+  width: auto;
+  display: inline-block; }
+  .store-button:first-of-type {
+    margin-right: 12px; }
+  @media (max-width: 491px) {
+    .store-button:first-of-type {
+      margin-right: 0;
+      margin-bottom: 12px; } }
+  .store-button:hover {
+    transition: all 0.2s ease-in-out;
+    transform: scale(1.05); }
+  .store-button svg {
+    width: auto;
+    height: 100%;
+    display: block;
+    position: relative; }
+  @media (max-width: 768px) {
+    .store-button {
+      margin: auto; } }
+
+@media (max-width: 491px) {
+  .text-to-phone:not(.email-subscribe) {
+    display: none !important; } }
+
+.text-to-phone input[type='tel'], .text-to-phone input[type='email'] {
+  transition: all 0.2s linear;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  border-radius: 4px;
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+  outline: none;
+  color: #333 !important;
+  text-align: left; }
+  .text-to-phone input[type='tel']:focus, .text-to-phone input[type='email']:focus {
+    border-color: var(--link-color); }
+
+.text-to-phone input[type='email'] {
+  padding-left: 12px;
+  width: 230px; }
+
+.text-to-phone button, .text-to-phone input[type='submit'] {
+  border-radius: 4px;
+  background: var(--link-color);
+  color: white;
+  font-size: 14px;
+  border: 0;
+  padding: 6px 8px;
+  padding-top: 7px;
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+  outline: none;
+  cursor: pointer; }
+
+section {
+  padding: 5em 0;
+  background: white; }
+  section:not(.text-section) * {
+    color: #333; }
+  section h2 {
+    font-size: 2.5em;
+    color: #333;
+    padding-bottom: 0.25em;
+    margin-bottom: 0; }
+
+#screenshots .owl-nav {
+  padding-top: 3em; }
+  #screenshots .owl-nav button {
+    outline: none; }
+  #screenshots .owl-nav .owl-next, #screenshots .owl-nav .owl-prev {
+    font-size: 2em; }
+    #screenshots .owl-nav .owl-next *, #screenshots .owl-nav .owl-prev * {
+      color: rgba(0, 0, 0, 0.25); }
+  #screenshots .owl-nav .owl-prev {
+    margin-right: 1em; }
+
+#screenshots img {
+  border-radius: 0.5em;
+  -webkit-box-shadow: 2px 2px 10px -2px rgba(0, 0, 0, 0.49);
+  -moz-box-shadow: 2px 2px 10px -2px rgba(0, 0, 0, 0.49);
+  box-shadow: 2px 2px 5px -2px rgba(0, 0, 0, 0.49); }
+
+#screenshots h2 {
+  padding-bottom: 0.5em;
+  margin-bottom: 2em;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  display: inline-block;
+  padding-left: 2em;
+  padding-right: 2em; }
+
+@media (max-width: 767px) {
+  #screenshots h2 {
+    padding-left: 0;
+    padding-right: 0;
+    display: block; } }
+
+#features p {
+  font-size: 1.4em; }
+
+#features ul {
+  padding-left: 1em;
+  padding-top: 0.75em; }
+  #features ul li {
+    list-style-type: circle;
+    font-size: 1.2em;
+    padding-bottom: 0.5em; }
+
+#features button {
+  transition: transform 0.2s ease-in-out;
+  padding: 0.75em 1.5em;
+  border: 0;
+  border-radius: 4px;
+  margin-top: 1em;
+  background-color: var(--background-color);
+  color: white;
+  cursor: pointer; }
+  #features button:hover {
+    transform: scale(1.1); }
+
+#features .feature-right {
+  text-align: left;
+  padding-top: 2em; }
+
+#features .feature-left {
+  text-align: center;
+  padding-right: 0; }
+  #features .feature-left img {
+    max-width: 100%;
+    max-height: 575px; }
+
+@media (min-width: 767px) {
+  #features .feature-left {
+    margin: auto;
+    padding-right: 40px; } }
+
+@media (max-width: 767px) {
+  #features .feature-right {
+    padding-top: 4em; }
+  #features ul {
+    padding-left: 0; }
+    #features ul li {
+      list-style: none; } }
+
+#reviews .stars {
+  width: 100%;
+  padding-bottom: 1.5em; }
+  #reviews .stars svg {
+    color: #eec643;
+    height: 34px;
+    width: 34px; }
+    #reviews .stars svg path {
+      fill: #eec643; }
+
+#reviews #quote-carousel {
+  padding: 0 80px; }
+  #reviews #quote-carousel .carousel-control svg {
+    width: 14px; }
+  #reviews #quote-carousel .carousel-control path {
+    fill: #999; }
+  #reviews #quote-carousel .carousel-indicators {
+    margin-bottom: -1em; }
+    #reviews #quote-carousel .carousel-indicators li {
+      background: #c0c0c0; }
+    #reviews #quote-carousel .carousel-indicators .active {
+      background: #666; }
+
+#reviews blockquote {
+  position: relative;
+  font-size: 1em;
+  font-style: italic;
+  color: #666;
+  padding: 0 5%;
+  margin-bottom: 0; }
+  @media (min-width: 768px) {
+    #reviews blockquote {
+      font-size: 1.6em;
+      line-height: 1.5em;
+      padding: 0 10%; } }
+  #reviews blockquote footer {
+    background: none !important;
+    font-size: 0.6em;
+    font-weight: 700;
+    color: #c7c6c1; }
+    #reviews blockquote footer:before {
+      content: '\2015'; }
+
+a.contact {
+  color: #999; }
+
+a.contact:hover {
+  color: #fff;
+  text-decoration: none; }
+
+@media (max-width: 767px) {
+  * {
+    text-align: center; }
+  section.text-section .col-xs-12 {
+    padding: 0 15px; } }
+
+#dl-loader {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: white;
+  padding-top: 5em;
+  display: none; }
+  #dl-loader .coffee_cup {
+    width: 20px;
+    height: 24px;
+    border: 1px #999 solid;
+    border-radius: 0px 0px 5px 5px;
+    position: relative;
+    margin: 12px auto; }
+    #dl-loader .coffee_cup:after, #dl-loader .coffee_cup:before {
+      position: absolute;
+      content: ""; }
+    #dl-loader .coffee_cup:after {
+      width: 5px;
+      height: 12px;
+      border: 1px #999 solid;
+      border-left: none;
+      border-radius: 0px 20px 20px 0px;
+      left: 20px; }
+    #dl-loader .coffee_cup:before {
+      width: 1px;
+      height: 6px;
+      background-color: #999;
+      top: -10px;
+      left: 4px;
+      box-shadow: 5px 0px 0px 0px #999, 5px -5px 0px 0px #999, 10px 0px 0px 0px #999;
+      -webkit-animation: steam 1s linear infinite alternate;
+      -moz-animation: steam 1s linear infinite alternate;
+      animation: steam 1s linear infinite alternate; }
+
+@-webkit-keyframes steam {
+  0% {
+    height: 0px; }
+  100% {
+    height: 6px; } }
+
+@-moz-keyframes steam {
+  0% {
+    height: 0px; }
+  100% {
+    height: 6px; } }
+
+@keyframes steam {
+  0% {
+    height: 0px; }
+  100% {
+    height: 6px; } }
+  #dl-loader div {
+    color: #666;
+    font-size: 0.9em; }
+</style>
+
+
+
+
+
+<style id="global_style">:root {
+	--background-color: #004AC5;
+	--text-color: #ffffff;
+	--link-color: #EEC643;
+	--linkhover-color: #005A88;
+	--main-font: 'Oxygen';
+	--backgroundgradient: True;
+	--backgroundopacity: 0.9;
+}
+</style>
+<style>
+		.grecaptcha-badge {
+			visibility: hidden;
+		}
+
+		* {
+			-webkit-font-smoothing: antialiased;
+			-moz-osx-font-smoothing: grayscale;
+		}
+
+		.main-container {
+			color: #222;
+			padding: 2em 0;
+			padding-bottom: 4em;
+			text-align: left !important;
+
+			padding: 2em;
+			background: white;
+			min-height: 400px;
+			-webkit-box-shadow: 0px 0px 3px 0px rgba(0, 0, 0, 0.25);
+			-moz-box-shadow: 0px 0px 3px 0px rgba(0, 0, 0, 0.25);
+			box-shadow: 0px 0px 3px 0px rgba(0, 0, 0, 0.25);
+
+		}
+
+		.main-container * {
+			text-align: left !important;
+		}
+
+		.main-container *:not(a) {
+			color: #222;
+		}
+
+		.main-container ins.adsbygoogle {
+			background: #ccc;
+		}
+
+		.main-container #content p {
+			margin-top: 1rem;
+			margin-bottom: 1rem;
+		}
+
+		a {
+			color: #009c9c;
+		}
+
+		a:hover {
+			color: #007bff;
+		}
+
+		h2 {
+			font-size: 1.5em;
+		}
+
+		@media only screen and (max-width: 600px) {
+			h2 {
+				font-size: 1.2em;
+			}
+		}
+
+		a.nohover {
+			color: white;
+			text-decoration: none;
+		}
+
+		#preloader {
+			position: fixed;
+			top: 0;
+			bottom: 0;
+			left: 0;
+			right: 0;
+			width: 100%;
+			height: 100%;
+			display: flex;
+			flex-direction: column;
+			background: white;
+			text-align: center;
+			align-items: center;
+			justify-content: center;
+			align-content: center;
+			z-index: 99999;
+		}
+
+		.loader {
+			border: 8px solid #f3f3f3;
+			/* Light grey */
+			border-top: 8px solid #009c9c;
+			/* Blue */
+			border-radius: 50%;
+			width: 60px;
+			height: 60px;
+			animation: spin 1.5s linear infinite;
+		}
+
+		@keyframes spin {
+			0% {
+				transform: rotate(0deg);
+			}
+
+			100% {
+				transform: rotate(360deg);
+			}
+		}
+	</style>
+<style>
+		#fc123-promo {
+			padding-bottom: 20px;
+			background: #eee;
+		}
+
+		.fc123-promoclass {
+			padding: 10px 20px;
+			display: none;
+			flex-wrap: wrap;
+			cursor: pointer;
+		}
+
+		.fc123-promoclass * {
+			font-family: 'Exo 2', sans-serif;
+		}
+
+		.fc123-promoclass img {
+			display: inline-block;
+			margin-right: 20px;
+			border-radius: 8px;
+			max-height: 50px;
+		}
+
+		.fc123-promoclass .fc123-button {
+			padding: 10px 30px;
+			border-radius: 8px;
+			font-weight: bold;
+			transition: all 0.2s ease-in-out;
+			cursor: pointer;
+			margin-top: 10px;
+		}
+
+		.fc123-promoclass .fc123-button:hover {
+			background: #357DED;
+		}
+
+		.fc123-promoclass .fc123-pc-text {
+			padding-right: 1em;
+		}
+
+		.fc123-promoclass h1 {
+			text-align: left;
+			font-size: 1.8em;
+			margin: 0;
+		}
+
+		.fc123-promoclass h2 {
+			text-align: left;
+			font-size: 1.1em;
+			margin: 0;
+		}
+
+		.fc123-pr {
+			font-size: 0.7em;
+			text-align: right;
+			margin-top: 5px;
+			opacity: 0.8;
+			margin-right: 4px;
+			transition: all 0.2s ease-in-out;
+		}
+
+		.fc123-pr:hover {
+			opacity: 1;
+		}
+
+		.fc123-button svg {
+			width: 18px;
+			height: 18px;
+			position: relative;
+			top: 3px;
+			margin-right: 4px;
+			display: none;
+		}
+
+		.fc123-button svg.fc123-b-ios {
+			top: 2px;
+		}
+
+		@media only screen and (max-width: 768px) {
+			.fc123-promoclass h1 {
+				font-size: 1.5em;
+			}
+
+			.fc123-promoclass h2 {
+				font-size: 1em;
+			}
+		}
+
+		@media only screen and (max-width: 600px) {
+			.fc123-promoclass h1 {
+				font-size: 1.25em;
+				text-align: center;
+			}
+
+			.fc123-promoclass h2 {
+				font-size: 0.9em;
+				text-align: center;
+			}
+
+			.fc123-promoclass .fc123-button {
+				padding: 10px 24px;
+				border-radius: 4px;
+				font-size: 1em;
+			}
+
+			.fc123-pr {
+				text-align: center;
+				margin-right: 0;
+			}
+
+			.fc123-button svg {
+				width: 16px;
+				height: 16px;
+				position: relative;
+				top: 3px;
+				margin-right: 4px;
+			}
+
+			.fc123-promoclass {
+				text-align: center !important;
+			}
+
+			.fc123-promoclass img {
+				display: none;
+			}
+
+			.fc123-promoclass .fc123-pc-action {
+				text-align: center;
+				width: 100%;
+			}
+
+			.fc123-break {
+				flex-basis: 100%;
+				height: 0;
+			}
+		}
+	</style>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport">
+<meta content="needybox.app" property="og:url">
+<meta content="website" property="og:type">
+<meta content="NeedyBox - Privacy Policy" property="og:title">
+<!-- <meta property="og:image" content="" /> -->
+<meta content="" property="og:description">
+<meta content="" name="description">
+<title>NeedyBox - End-User License Agreement</title></head>
+<body style="background:#222;" data-gr-c-s-loaded="true" cz-shortcut-listen="true">
+<div id="preloader" pro-remove="" style="display: none;">
+<div style="flex:1;"></div>
+<div class="loader"></div>
+<div style="flex:1;"></div>
+</div>
+
+
+<div style="background:#eee;">
+<div class="container">
+
+<div class=" main-container">
+<h2>
+					
+						NeedyBox
+						
+					&gt; End-User License Agreement</h2>
+<hr>
+<div id="content"><h1>End-User License Agreement ("Agreement")</h1><p>Last updated: August 11, 2020</p><p>Please read this End-User License Agreement carefully before clicking the "I Agree" button or using NeedyBox.</p><p>This policy is effective as of 2020-08-20</p><h1>Interpretation and Definitions</h1><h2>Interpretation</h2><p>The words of which the initial letter is capitalized have meanings defined under the following conditions. The following definitions shall have the same meaning regardless of whether they appear in singular or in plural.</p><h2>Definitions</h2><p>For the purposes of this End-User License Agreement:</p><ul><li><p>Agreement&nbsp;means this End-User License Agreement that forms the entire agreement between You and the Company regarding the use of the Application.&nbsp;</p></li><li><p>Application&nbsp;means the software program provided by the Company downloaded by You to a Device, named NeedyBox</p></li><li><p>Company&nbsp;(referred to as either "the Company", "We", "Us" or "Our" in this Agreement) refers to HSD GROUP, HSD Group Headquarters.</p></li><li><p>Content&nbsp;refers to content such as text, images, or other information that can be posted, uploaded, linked to or otherwise made available by You, regardless of the form of that content.</p></li><li><p>Country&nbsp;refers to: Maharashtra, India</p></li><li><p>Device&nbsp;means any device that can access the Application such as a computer, a cellphone or a digital tablet.</p></li><li><p>Third-Party Services&nbsp;means any services or content (including data, information, applications and other products services) provided by a third-party that may be displayed, included or made available by the Application.</p></li><li><p>You&nbsp;means the individual accessing or using the Application or the company, or other legal entity on behalf of which such individual is accessing or using the Application, as applicable.</p></li></ul><h1>Acknowledgement</h1><p>By clicking the "I Agree" button, downloading or using the Application, You are agreeing to be bound by the terms and conditions of this Agreement. If You do not agree to the terms of this Agreement, do not click on the "I Agree" button, do not download or do not use the Application.</p><p>This Agreement is a legal document between You and the Company and it governs your use of the Application made available to You by the Company.</p><p>The Application is licensed, not sold, to You by the Company for use strictly in accordance with the terms of this Agreement.</p><p>This Application Is Open Source At GitHub and You Are Not Supposed To Use The Sources For Any Commercial purpose. Anyone Found Violating The EULA will be legally prosecuted.<br></p><h1>License</h1><h2>Scope of License</h2><p>The Company grants You a revocable, non-exclusive, non-transferable, limited license to download, install and use the Application strictly in accordance with the terms of this Agreement.</p><p>The license that is granted to You by the Company is solely for your personal, non-commercial purposes strictly in accordance with the terms of this Agreement.</p><h1>Third-Party Services</h1><p>The Application may display, include or make available third-party content (including data, information, applications and other products services) or provide links to third-party websites or services.</p><p>You acknowledge and agree that the Company shall not be responsible for any Third-party Services, including their accuracy, completeness, timeliness, validity, copyright compliance, legality, decency, quality or any other aspect thereof. The Company does not assume and shall not have any liability or responsibility to You or any other person or entity for any Third-party Services.</p><p>You must comply with applicable Third parties' Terms of agreement when using the Application. Third-party Services and links thereto are provided solely as a convenience to You and You access and use them entirely at your own risk and subject to such third parties' Terms and conditions.</p><h1>Term and Termination</h1><p>This Agreement shall remain in effect until terminated by You or the Company. The Company may, in its sole discretion, at any time and for any or no reason, suspend or terminate this Agreement with or without prior notice.</p><p>This Agreement will terminate immediately, without prior notice from the Company, in the event that you fail to comply with any provision of this Agreement. You may also terminate this Agreement by deleting the Application and all copies thereof from your Device or from your computer.</p><p>Upon termination of this Agreement, You shall cease all use of the Application and delete all copies of the Application from your Device.</p><p>Termination of this Agreement will not limit any of the Company's rights or remedies at law or in equity in case of breach by You (during the term of this Agreement) of any of your obligations under the present Agreement.</p><h1>Indemnification</h1><p>You agree to indemnify and hold the Company and its parents, subsidiaries, affiliates, officers, employees, agents, partners and licensors (if any) harmless from any claim or demand, including reasonable attorneys' fees, due to or arising out of your: (a) use of the Application; (b) violation of this Agreement or any law or regulation; or (c) violation of any right of a third party.</p><h1>No Warranties</h1><p>The Application is provided to You "AS IS" and "AS AVAILABLE" and with all faults and defects without warranty of any kind. To the maximum extent permitted under applicable law, the Company, on its own behalf and on behalf of its affiliates and its and their respective licensors and service providers, expressly disclaims all warranties, whether express, implied, statutory or otherwise, with respect to the Application, including all implied warranties of merchantability, fitness for a particular purpose, title and non-infringement, and warranties that may arise out of course of dealing, course of performance, usage or trade practice. Without limitation to the foregoing, the Company provides no warranty or undertaking, and makes no representation of any kind that the Application will meet your requirements, achieve any intended results, be compatible or work with any other software, applications, systems or services, operate without interruption, meet any performance or reliability standards or be error free or that any errors or defects can or will be corrected.</p><p>Without limiting the foregoing, neither the Company nor any of the company's provider makes any representation or warranty of any kind, express or implied: (i) as to the operation or availability of the Application, or the information, content, and materials or products included thereon; (ii) that the Application will be uninterrupted or error-free; (iii) as to the accuracy, reliability, or currency of any information or content provided through the Application; or (iv) that the Application, its servers, the content, or e-mails sent from or on behalf of the Company are free of viruses, scripts, trojan horses, worms, malware, timebombs or other harmful components.</p><p>Some jurisdictions do not allow the exclusion of certain types of warranties or limitations on applicable statutory rights of a consumer, so some or all of the above exclusions and limitations may not apply to You. But in such a case the exclusions and limitations set forth in this section 11 shall be applied to the greatest extent enforceable under applicable law. To the extent any warranty exists under law that cannot be disclaimed, the Company shall be solely responsible for such warranty.</p><h1>Limitation of Liability</h1><p>Notwithstanding any damages that You might incur, the entire liability of the Company and any of its suppliers under any provision of this Agreement and your exclusive remedy for all of the foregoing shall be limited to the amount actually paid by You for the Application or through the Application.</p><p>To the maximum extent permitted by applicable law, in no event shall the Company or its suppliers be liable for any special, incidental, indirect, or consequential damages whatsoever (including, but not limited to, damages for loss of profits, loss of data or other information, for business interruption, for personal injury, loss of privacy arising out of or in any way related to the use of or inability to use the Application, third-party software and/or third-party hardware used with the Application, or otherwise in connection with any provision of this Agreement), even if the Company or any supplier has been advised of the possibility of such damages and even if the remedy fails of its essential purpose.</p><p>Some states/jurisdictions do not allow the exclusion or limitation of incidental or consequential damages, so the above limitation or exclusion may not apply to You.</p><h1>Severability and Waiver</h1><h2>Severability</h2><p>If any provision of this Agreement is held to be unenforceable or invalid, such provision will be changed and interpreted to accomplish the objectives of such provision to the greatest extent possible under applicable law and the remaining provisions will continue in full force and effect.</p><h2>Waiver</h2><p>Except as provided herein, the failure to exercise a right or to require performance of an obligation under this Agreement shall not effect a party's ability to exercise such right or require such performance at any time thereafter nor shall be the waiver of a breach constitute a waiver of any subsequent breach.</p><h1>Product Claims</h1><p>The Company does not make any warranties concerning the Application.</p><h1>United States Legal Compliance</h1><p>You represent and warrant that (i) You are not located in a country that is subject to the United States government embargo, or that has been designated by the United States government as a "terrorist supporting" country, and (ii) You are not listed on any United States government list of prohibited or restricted parties.</p><h1>Changes to this Agreement</h1><p>The Company reserves the right, at its sole discretion, to modify or replace this Agreement at any time. If a revision is material we will provide at least 30 days' notice prior to any new terms taking effect. What constitutes a material change will be determined at the sole discretion of the Company.</p><p>By continuing to access or use the Application after any revisions become effective, You agree to be bound by the revised terms. If You do not agree to the new terms, You are no longer authorized to use the Application.</p><h1>Governing Law</h1><p>The laws of the Country, excluding its conflicts of law rules, shall govern this Agreement and your use of the Application. Your use of the Application may also be subject to other local, state, national, or international laws.</p><h1>Entire Agreement</h1><p>The Agreement constitutes the entire agreement between You and the Company regarding your use of the Application and supersedes all prior and contemporaneous written or oral agreements between You and the Company.</p><p>You may be subject to additional terms and conditions that apply when You use or purchase other Company's services, which the Company will provide to You at the time of such use or purchase.</p><h1>Contact Us</h1><p>If you have any questions about this Agreement, You can contact Us:</p><ul><li>By email:&nbsp;needybox@gmail.com</li></ul></div>
+</div>
+</div>
+</div>
+
+
+
+
+
+
+
+</body></html>
